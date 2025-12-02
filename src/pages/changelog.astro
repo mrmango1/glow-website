@@ -1,0 +1,45 @@
+---
+import BaseLayout from "@components/base/BaseLayout.astro";
+import ChangelogTimeline from "@components/changelog/ChangelogTimeline.tsx";
+
+const title = "Changelog - Glow";
+const description = "See what's new in Glow. All notable changes, updates, and improvements.";
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="changelog-page">
+    <section class="changelog-content">
+      <div class="container">
+        <ChangelogTimeline client:load />
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  .changelog-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .changelog-content {
+    padding: 0;
+  }
+
+  @media (max-width: 640px) {
+    .changelog-page {
+      padding: 1rem 0;
+    }
+
+    .container {
+      padding: 0 1.25rem;
+    }
+  }
+</style>

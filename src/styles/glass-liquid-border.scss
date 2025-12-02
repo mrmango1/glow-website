@@ -1,0 +1,145 @@
+// Liquid Glass Border Effect - Ghostty Style
+// Two-layer design: Stroke layer + Highlight gradient layer
+
+// CSS Variables for customization
+:root {
+  --liquid-border-color: rgba(0, 0, 0, 0.3); // Default border color
+  --liquid-border-width: 1px; // Default border width
+  --liquid-highlight-start: rgba(255, 255, 255, 0.45); // Bottom highlight (45% opacity)
+  --liquid-highlight-end: rgba(255, 255, 255, 0); // Top highlight (0% opacity)
+  --liquid-highlight-width: 2px; // Highlight layer width
+}
+
+// Dark mode adjustments
+:root.dark {
+  --liquid-border-color: rgba(255, 255, 255, 0.15);
+  --liquid-highlight-start: rgba(255, 255, 255, 0.35);
+}
+
+// Liquid Glass Border Mixin
+@mixin liquid-glass-border {
+  position: relative;
+
+  // Layer 1: Stroke Layer (Base border)
+  border: var(--liquid-border-width) solid var(--liquid-border-color);
+  border-radius: inherit;
+
+  // Layer 2: Highlight Layer (Gradient overlay)
+  &::before {
+    content: '';
+    position: absolute;
+    inset: calc(var(--liquid-border-width) * -1);
+    border-radius: inherit;
+    padding: var(--liquid-highlight-width);
+
+    // Create gradient from bottom to top
+    background: linear-gradient(
+      to top,
+      var(--liquid-highlight-start) 0%,    // Bottom: 45% white opacity
+      var(--liquid-highlight-end) 100%     // Top: 0% opacity
+    );
+
+    // Use mask to show only the border area
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+// Main liquid glass border class
+.liquid-glass-border {
+  @include liquid-glass-border;
+
+  // Ensure content is above the border effects
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Enhanced glass with liquid border
+.glass-liquid {
+  @include liquid-glass-border;
+
+  // Glass background effect
+  background: color-mix(in srgb, var(--glass-color) 12%, transparent);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  // Multiple shadows for depth
+  box-shadow:
+    // Inner light reflexes
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.05),
+
+    // External shadows
+    0 2px 8px -2px rgba(0, 0, 0, 0.15),
+    0 4px 16px -4px rgba(0, 0, 0, 0.1);
+
+  // Ensure content stays above effects
+  & > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Alternative implementation using box-shadow for the highlight
+.glass-liquid-alt {
+  position: relative;
+
+  // Stroke layer
+  border: var(--liquid-border-width) solid var(--liquid-border-color);
+  border-radius: inherit;
+
+  // Highlight using box-shadow instead of pseudo-element
+  box-shadow:
+    // Highlight gradient simulation (bottom stronger than top)
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.45),
+    inset 0 -0.5px 0 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+
+    // External shadows
+    0 2px 8px -2px rgba(0, 0, 0, 0.15);
+
+  // Glass background
+  background: color-mix(in srgb, var(--glass-color) 12%, transparent);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+}
+
+// Utility classes for different border colors
+.liquid-border-black {
+  --liquid-border-color: rgba(0, 0, 0, 0.4);
+}
+
+.liquid-border-white {
+  --liquid-border-color: rgba(255, 255, 255, 0.3);
+}
+
+.liquid-border-blue {
+  --liquid-border-color: rgba(59, 130, 246, 0.4);
+}
+
+// Utility classes for border width
+.liquid-border-thin {
+  --liquid-border-width: 0.5px;
+  --liquid-highlight-width: 1.5px;
+}
+
+.liquid-border-medium {
+  --liquid-border-width: 1px;
+  --liquid-highlight-width: 2px;
+}
+
+.liquid-border-thick {
+  --liquid-border-width: 2px;
+  --liquid-highlight-width: 3px;
+}

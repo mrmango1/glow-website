@@ -1,0 +1,425 @@
+// Vision Pro Design System
+// Based on Apple Vision Pro UI Kit - Spatial Computing Interface
+
+// Vision Pro Color Variables
+:root {
+  // Glass Material Colors (More Transparency)
+  --vp-glass-primary: rgba(30, 30, 32, 0.5);
+  --vp-glass-secondary: rgba(44, 44, 46, 0.45);
+  --vp-glass-tertiary: rgba(58, 58, 60, 0.4);
+  --vp-glass-quaternary: rgba(72, 72, 74, 0.35);
+
+  // Overlay Materials
+  --vp-overlay-thin: rgba(0, 0, 0, 0.25);
+  --vp-overlay-regular: rgba(0, 0, 0, 0.4);
+  --vp-overlay-thick: rgba(0, 0, 0, 0.55);
+  --vp-overlay-ultra-thick: rgba(0, 0, 0, 0.75);
+
+  // Light Materials
+  --vp-light-thin: rgba(255, 255, 255, 0.05);
+  --vp-light-regular: rgba(255, 255, 255, 0.08);
+  --vp-light-thick: rgba(255, 255, 255, 0.12);
+  --vp-light-ultra-thick: rgba(255, 255, 255, 0.18);
+
+  // Border Colors
+  --vp-border-subtle: rgba(255, 255, 255, 0.08);
+  --vp-border-regular: rgba(255, 255, 255, 0.12);
+  --vp-border-prominent: rgba(255, 255, 255, 0.18);
+
+  // Text Colors
+  --vp-text-primary: rgba(255, 255, 255, 0.95);
+  --vp-text-secondary: rgba(255, 255, 255, 0.7);
+  --vp-text-tertiary: rgba(255, 255, 255, 0.5);
+  --vp-text-quaternary: rgba(255, 255, 255, 0.35);
+
+  // Blur Values
+  --vp-blur-thin: 20px;
+  --vp-blur-regular: 40px;
+  --vp-blur-thick: 60px;
+  --vp-blur-ultra-thick: 80px;
+
+  // Spacing Scale (larger for spatial viewing)
+  --vp-space-xs: 0.5rem;
+  --vp-space-sm: 1rem;
+  --vp-space-md: 1.5rem;
+  --vp-space-lg: 2rem;
+  --vp-space-xl: 3rem;
+  --vp-space-2xl: 4rem;
+  --vp-space-3xl: 6rem;
+
+  // Border Radius
+  --vp-radius-sm: 12px;
+  --vp-radius-md: 16px;
+  --vp-radius-lg: 24px;
+  --vp-radius-xl: 32px;
+  --vp-radius-2xl: 40px;
+  --vp-radius-full: 9999px;
+
+  // Typography Scale
+  --vp-text-xs: 0.875rem;
+  --vp-text-sm: 1rem;
+  --vp-text-md: 1.125rem;
+  --vp-text-lg: 1.375rem;
+  --vp-text-xl: 1.75rem;
+  --vp-text-2xl: 2.25rem;
+  --vp-text-3xl: 3rem;
+  --vp-text-4xl: 4rem;
+
+  // Shadows
+  --vp-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --vp-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.16);
+  --vp-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --vp-shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.24);
+  --vp-shadow-2xl: 0 32px 128px rgba(0, 0, 0, 0.32);
+}
+
+// Light mode adjustments
+:root.light {
+  --vp-glass-primary: rgba(242, 242, 247, 0.5);
+  --vp-glass-secondary: rgba(229, 229, 234, 0.45);
+  --vp-glass-tertiary: rgba(209, 209, 214, 0.4);
+  --vp-glass-quaternary: rgba(174, 174, 178, 0.35);
+
+  --vp-overlay-thin: rgba(255, 255, 255, 0.25);
+  --vp-overlay-regular: rgba(255, 255, 255, 0.4);
+  --vp-overlay-thick: rgba(255, 255, 255, 0.55);
+  --vp-overlay-ultra-thick: rgba(255, 255, 255, 0.75);
+
+  --vp-light-thin: rgba(0, 0, 0, 0.04);
+  --vp-light-regular: rgba(0, 0, 0, 0.06);
+  --vp-light-thick: rgba(0, 0, 0, 0.08);
+  --vp-light-ultra-thick: rgba(0, 0, 0, 0.12);
+
+  --vp-border-subtle: rgba(0, 0, 0, 0.08);
+  --vp-border-regular: rgba(0, 0, 0, 0.12);
+  --vp-border-prominent: rgba(0, 0, 0, 0.18);
+
+  --vp-text-primary: rgba(0, 0, 0, 0.95);
+  --vp-text-secondary: rgba(0, 0, 0, 0.7);
+  --vp-text-tertiary: rgba(0, 0, 0, 0.5);
+  --vp-text-quaternary: rgba(0, 0, 0, 0.35);
+}
+
+// Vision Pro Window Container
+.vp-window {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--vp-glass-primary);
+  backdrop-filter: blur(var(--vp-blur-ultra-thick)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--vp-blur-ultra-thick)) saturate(180%);
+  border-radius: var(--vp-radius-lg);
+  border: 1px solid var(--vp-border-subtle);
+  overflow: hidden;
+  height: 100%;
+
+  // Multi-layered shadows for depth
+  box-shadow:
+    // Inner light reflections
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+    // Outer shadows for floating effect
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    0 4px 8px rgba(0, 0, 0, 0.06),
+    0 12px 24px rgba(0, 0, 0, 0.08),
+    0 24px 48px rgba(0, 0, 0, 0.12),
+    0 48px 96px rgba(0, 0, 0, 0.16);
+}
+
+// Vision Pro Panel (Card/Container)
+.vp-panel {
+  background: var(--vp-glass-secondary);
+  backdrop-filter: blur(var(--vp-blur-regular)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--vp-blur-regular)) saturate(150%);
+  border-radius: var(--vp-radius-lg);
+  border: 1px solid var(--vp-border-subtle);
+  padding: var(--vp-space-lg);
+
+  box-shadow:
+    inset 0 1px 0 0 var(--vp-light-thin),
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background: var(--vp-glass-tertiary);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow:
+      inset 0 1px 0 0 var(--vp-light-regular),
+      0 2px 4px rgba(0, 0, 0, 0.06),
+      0 8px 16px rgba(0, 0, 0, 0.1),
+      0 16px 32px rgba(0, 0, 0, 0.12);
+  }
+}
+
+// Vision Pro Input Fields
+.vp-input {
+  background: var(--vp-glass-tertiary);
+  backdrop-filter: blur(var(--vp-blur-thin));
+  -webkit-backdrop-filter: blur(var(--vp-blur-thin));
+  border: 1px solid var(--vp-border-regular);
+  border-radius: var(--vp-radius-md);
+  padding: var(--vp-space-sm) var(--vp-space-md);
+  color: var(--vp-text-primary);
+  font-size: var(--vp-text-md);
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: var(--vp-text-tertiary);
+  }
+
+  &:hover {
+    background: var(--vp-glass-quaternary);
+    border-color: var(--vp-border-prominent);
+  }
+
+  &:focus {
+    outline: none;
+    background: var(--vp-overlay-regular);
+    border-color: var(--vp-border-prominent);
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.1),
+      inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Vision Pro Buttons
+.vp-button {
+  background: var(--vp-glass-secondary);
+  backdrop-filter: blur(var(--vp-blur-thin));
+  -webkit-backdrop-filter: blur(var(--vp-blur-thin));
+  border: 1px solid var(--vp-border-regular);
+  border-radius: var(--vp-radius-md);
+  padding: var(--vp-space-sm) var(--vp-space-lg);
+  color: var(--vp-text-primary);
+  font-size: var(--vp-text-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  box-shadow:
+    inset 0 1px 0 0 var(--vp-light-regular),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    background: var(--vp-glass-tertiary);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow:
+      inset 0 1px 0 0 var(--vp-light-thick),
+      0 2px 4px rgba(0, 0, 0, 0.08),
+      0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0) scale(1);
+    background: var(--vp-glass-quaternary);
+  }
+
+  &.primary {
+    background: linear-gradient(
+      135deg,
+      rgba(59, 130, 246, 0.8),
+      rgba(99, 102, 241, 0.8)
+    );
+    border-color: rgba(59, 130, 246, 0.5);
+
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.9),
+        rgba(99, 102, 241, 0.9)
+      );
+    }
+  }
+}
+
+// Vision Pro Typography
+.vp-heading {
+  color: var(--vp-text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+
+  &.h1 {
+    font-size: var(--vp-text-4xl);
+    margin-bottom: var(--vp-space-xl);
+  }
+
+  &.h2 {
+    font-size: var(--vp-text-3xl);
+    margin-bottom: var(--vp-space-lg);
+  }
+
+  &.h3 {
+    font-size: var(--vp-text-2xl);
+    margin-bottom: var(--vp-space-md);
+  }
+}
+
+.vp-text {
+  color: var(--vp-text-secondary);
+  font-size: var(--vp-text-md);
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+
+  &.large {
+    font-size: var(--vp-text-lg);
+    line-height: 1.6;
+  }
+
+  &.small {
+    font-size: var(--vp-text-sm);
+    color: var(--vp-text-tertiary);
+  }
+}
+
+// Vision Pro List Items
+.vp-list-item {
+  background: var(--vp-glass-secondary);
+  backdrop-filter: blur(var(--vp-blur-thin));
+  -webkit-backdrop-filter: blur(var(--vp-blur-thin));
+  border: 1px solid var(--vp-border-subtle);
+  border-radius: var(--vp-radius-md);
+  padding: var(--vp-space-md) var(--vp-space-lg);
+  margin-bottom: var(--vp-space-sm);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--vp-glass-tertiary);
+    border-color: var(--vp-border-regular);
+    transform: translateX(4px);
+  }
+}
+
+// Vision Pro Divider
+.vp-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--vp-border-regular) 20%,
+    var(--vp-border-regular) 80%,
+    transparent
+  );
+  margin: var(--vp-space-xl) 0;
+  border: none;
+}
+
+// Vision Pro Navigation Bar
+.vp-nav {
+  background: var(--vp-glass-primary);
+  backdrop-filter: blur(var(--vp-blur-ultra-thick)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--vp-blur-ultra-thick)) saturate(200%);
+  border-bottom: 1px solid var(--vp-border-subtle);
+  padding: var(--vp-space-md) var(--vp-space-xl);
+
+  box-shadow:
+    0 1px 0 0 var(--vp-light-thin),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+// Vision Pro Tabs
+.vp-tabs {
+  display: flex;
+  gap: var(--vp-space-xs);
+  padding: var(--vp-space-xs);
+  background: var(--vp-overlay-thin);
+  border-radius: var(--vp-radius-md);
+
+  .vp-tab {
+    flex: 1;
+    padding: var(--vp-space-sm) var(--vp-space-md);
+    background: transparent;
+    border: none;
+    border-radius: var(--vp-radius-sm);
+    color: var(--vp-text-secondary);
+    font-size: var(--vp-text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--vp-light-thin);
+      color: var(--vp-text-primary);
+    }
+
+    &.active {
+      background: var(--vp-glass-secondary);
+      color: var(--vp-text-primary);
+      box-shadow:
+        inset 0 1px 0 0 var(--vp-light-regular),
+        0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Utility Classes
+.vp-blur-bg {
+  backdrop-filter: blur(var(--vp-blur-thick));
+  -webkit-backdrop-filter: blur(var(--vp-blur-thick));
+}
+
+.vp-floating {
+  box-shadow: var(--vp-shadow-2xl);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 40px 80px rgba(0, 0, 0, 0.2),
+      0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Animations
+@keyframes vp-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes vp-slide-in {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.vp-animate-in {
+  animation: vp-fade-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.vp-animate-slide {
+  animation: vp-slide-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  :root {
+    --vp-space-xs: 0.375rem;
+    --vp-space-sm: 0.75rem;
+    --vp-space-md: 1rem;
+    --vp-space-lg: 1.5rem;
+    --vp-space-xl: 2rem;
+    --vp-space-2xl: 3rem;
+    --vp-space-3xl: 4rem;
+
+    --vp-text-xs: 0.75rem;
+    --vp-text-sm: 0.875rem;
+    --vp-text-md: 1rem;
+    --vp-text-lg: 1.25rem;
+    --vp-text-xl: 1.5rem;
+    --vp-text-2xl: 2rem;
+    --vp-text-3xl: 2.5rem;
+    --vp-text-4xl: 3rem;
+  }
+}

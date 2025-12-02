@@ -1,0 +1,119 @@
+// Enhanced Glass Effects with Liquid Distortion
+// This file extends the base glass effects with advanced visual enhancements
+
+// Enhanced glass class with optional liquid distortion
+.enhanced-glass {
+  position: relative;
+
+  // Refined border styling like Ghostty
+  border: 0.5px solid rgba(255, 255, 255, 0.2) !important;
+  outline: 0.5px solid rgba(0, 0, 0, 0.06) !important;
+  outline-offset: -0.5px;
+
+  // Enhanced inner light reflections (no hover effect)
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 25%,
+      transparent 75%,
+      rgba(0, 0, 0, 0.04) 100%
+    );
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+}
+
+// Dark mode enhanced glass adjustments
+:root.dark .enhanced-glass,
+.dark .enhanced-glass {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  outline-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+// SVG Filters for Liquid Distortion Effect (optional)
+.glass-liquid-filter {
+  filter: url(#glass-distortion);
+}
+
+// Additional glass variants with different intensities
+.glass-subtle {
+  --glass-blur: 8px;
+  --glass-saturation: 120%;
+  --glass-color: rgba(187, 187, 188, 0.08);
+}
+
+.glass-intense {
+  --glass-blur: 16px;
+  --glass-saturation: 180%;
+  --glass-color: rgba(187, 187, 188, 0.15);
+}
+
+// Animated glass effect for special elements
+@keyframes glass-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.glass-shimmer {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: glass-shimmer 3s linear infinite;
+    pointer-events: none;
+  }
+}
+
+// Responsive adjustments for mobile
+@media (max-width: 768px) {
+  .enhanced-glass {
+    --glass-blur: 10px;
+    --glass-saturation: 130%;
+  }
+}
+
+// Dark mode specific enhancements
+.dark {
+  .enhanced-glass {
+    &::after {
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 20%,
+        transparent 80%,
+        rgba(0, 0, 0, 0.1) 100%
+      );
+    }
+  }
+}
+
+// Performance optimization: disable complex effects on low-end devices
+@media (prefers-reduced-motion: reduce) {
+  .enhanced-glass,
+  .glass-shimmer {
+    &::before,
+    &::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}

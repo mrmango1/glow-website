@@ -1,0 +1,198 @@
+---
+// macOS-style Dock with auto-hide functionality
+import safariLight from "@assets/icons/safari-light.png";
+import safariDark from "@assets/icons/safari-dark.png";
+import glassBarLight from "@assets/icons/GlassBar-Light.png";
+import glassBarDark from "@assets/icons/GlassBar-Dark.png";
+---
+
+<div class="dock-container" id="dock-container">
+  <div class="dock-trigger"></div>
+  <div class="dock">
+    <div class="dock-content">
+      {
+        [
+          {
+            title: "Safari",
+            light: safariLight,
+            dark: safariDark,
+            active: false
+          },
+          {
+            title: "Glow",
+            light: glassBarLight,
+            dark: glassBarDark,
+            active: true
+          }
+        ].map((item) => (
+          <div class={`dock-icon ${item.active ? 'active' : ''}`} title={item.title}>
+            <img
+              src={item.light.src}
+              alt={item.title}
+              class="dock-icon-img light-image"
+            />
+            <img
+              src={item.dark.src}
+              alt={item.title}
+              class="dock-icon-img dark-image"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .dock-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  .dock-trigger {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    pointer-events: auto;
+  }
+
+  .dock {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: auto;
+    padding-bottom: 8px;
+  }
+
+  .dock-container.auto-hide-mode:hover .dock,
+  .dock:hover {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dock-content {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 12px 20px;
+    background: var(--vp-glass-secondary);
+    backdrop-filter: blur(var(--vp-blur-thick)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--vp-blur-thick)) saturate(180%);
+    border-radius: 16px;
+    border: 1px solid var(--vp-border-subtle);
+    box-shadow: 
+      inset 0 1px 0 0 var(--vp-light-thin),
+      0 -4px 12px rgba(0, 0, 0, 0.1),
+      0 -8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .dock-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .dock-icon:hover {
+    transform: translateY(-12px) scale(1.2);
+  }
+
+  .dock-icon-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+  }
+
+  /* Light/Dark mode switching */
+  .light-image {
+    display: block;
+  }
+  :global(.dark) .light-image {
+    display: none;
+  }
+  .dark-image {
+    display: none;
+  }
+  :global(.dark) .dark-image {
+    display: block;
+  }
+
+  /* Indicator dot for active apps */
+  .dock-icon.active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--vp-text-primary);
+    opacity: 0.8;
+  }
+
+  /* Dark mode adjustments */
+  :global(.dark) .dock-content {
+    background: rgba(30, 30, 30, 0.85);
+  }
+
+  /* Auto-hide mode - only when colliding with window */
+  .dock.auto-hide {
+    transform: translateX(-50%) translateY(100%);
+  }
+
+  .dock-container.auto-hide-mode:hover .dock.auto-hide,
+  .dock.auto-hide:hover {
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+
+<script>
+  function checkDockCollision() {
+    const dock = document.querySelector('.dock');
+    const dockContainer = document.querySelector('.dock-container');
+    const browserWindow = document.querySelector('.vp-window');
+    
+    if (!dock || !dockContainer || !browserWindow) return;
+
+    const dockRect = dock.getBoundingClientRect();
+    const windowRect = browserWindow.getBoundingClientRect();
+    
+    // Check if window bottom is close to or overlapping dock
+    const margin = 40; // Margin to activate auto-hide before actual collision
+    const isColliding = windowRect.bottom + margin >= dockRect.top;
+    
+    if (isColliding) {
+      dock.classList.add('auto-hide');
+      dockContainer.classList.add('auto-hide-mode');
+    } else {
+      dock.classList.remove('auto-hide');
+      dockContainer.classList.remove('auto-hide-mode');
+    }
+  }
+
+  // Check on load, resize, and periodically
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(checkDockCollision, 200);
+  });
+  
+  window.addEventListener('load', checkDockCollision);
+  window.addEventListener('resize', checkDockCollision);
+  
+  // Check every 3 seconds in case content changes
+  setInterval(checkDockCollision, 3000);
+</script>

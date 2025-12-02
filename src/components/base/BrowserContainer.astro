@@ -1,0 +1,273 @@
+---
+// Vision Pro Window Container - Spatial Computing Interface
+// Props:
+// - class?: extra classes to apply to the window
+// - showHeader?: whether to show the window header (default: true)
+// - width?: width of the window (default: "1000px")
+// - height?: height of the window (default: "600px")
+export interface Props {
+  class?: string;
+  showHeader?: boolean;
+  width?: string;
+  height?: string;
+}
+const { class: extraClass = "", showHeader = true, width = "1000px", height = "600px" } = Astro.props as Props;
+const currentPath = Astro.url.pathname;
+
+---
+
+<section class="section-sm w-full vp-safe-area">
+  <div 
+    class={`vp-window vp-animate-in mx-auto ${showHeader ? 'with-chrome' : ''} ${extraClass}`} 
+    style={{
+      '--window-width': width,
+      '--window-height': height
+    }}
+  >
+    {showHeader && (
+      <!-- Vision Pro Window Header -->
+      <div class="vp-header">
+        <!-- Window Controls -->
+        <div class="vp-controls">
+          <button class="vp-control close" aria-label="Close">
+            <span class="control-dot"></span>
+          </button>
+          <button class="vp-control minimize" aria-label="Minimize">
+            <span class="control-dot"></span>
+          </button>
+          <button class="vp-control maximize" aria-label="Maximize">
+            <span class="control-dot"></span>
+          </button>
+        </div>
+        <!-- Window Title Bar -->
+        <div class="vp-titlebar">
+          <span class="vp-path">{currentPath === '/' ? 'Home' : currentPath.slice(1).charAt(0).toUpperCase() + currentPath.slice(2)}</span>
+        </div>
+        <!-- Window Actions -->
+        <div class="vp-actions">
+          <button class="vp-action" aria-label="More">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="1" fill="currentColor"/>
+              <circle cx="8" cy="4" r="1" fill="currentColor"/>
+              <circle cx="8" cy="12" r="1" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    )}
+    <!-- Vision Pro Content Area -->
+    <div class={`vp-content intersect:animate-fadeUp opacity-0 intersect-no-queue`}>
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Vision Pro Window Header - Transparent */
+  .vp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 20px;
+    background: transparent;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+
+  /* Window Controls */
+  .vp-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .vp-control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .control-dot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--vp-text-quaternary);
+    transition: all 0.2s ease;
+  }
+
+  .vp-control.close .control-dot {
+    background: #ff5f56;
+    opacity: 0.8;
+  }
+
+  .vp-control.minimize .control-dot {
+    background: #ffbd2e;
+    opacity: 0.8;
+  }
+
+  .vp-control.maximize .control-dot {
+    background: #27c93f;
+    opacity: 0.8;
+  }
+
+  .vp-controls:hover .vp-control .control-dot {
+    opacity: 1;
+  }
+
+  .vp-controls:not(:hover) .vp-control .control-dot {
+    opacity: 0.6;
+  }
+
+  .vp-control:hover .control-dot {
+    opacity: 1 !important;
+    transform: scale(1.1);
+  }
+
+  /* Title Bar */
+  .vp-titlebar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .vp-path {
+    color: var(--vp-text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+  }
+
+  /* Window Actions */
+  .vp-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .vp-action {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--vp-text-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .vp-action:hover {
+    background: var(--vp-light-regular);
+    color: var(--vp-text-primary);
+  }
+
+  /* Content Area - Scrollable */
+  .vp-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--vp-space-sm);
+    position: relative;
+    min-height: 0; /* Important for flexbox scroll */
+  }
+
+  /* Ensure vp-window is using flexbox properly */
+  .vp-window {
+    display: flex;
+    flex-direction: column;
+    width: var(--window-width, 1000px);
+    height: var(--window-height, 600px);
+    max-width: 100%;
+    max-height: calc(100vh - 140px); /* Reserve space for menubar (~40px) and dock (~100px) */
+    box-shadow: 
+      0 20px 60px rgba(0, 0, 0, 0.3),
+      0 40px 120px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Scrollbar Styling */
+  .vp-content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .vp-content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .vp-content::-webkit-scrollbar-thumb {
+    background: var(--vp-border-regular);
+    border-radius: 4px;
+  }
+
+  .vp-content::-webkit-scrollbar-thumb:hover {
+    background: var(--vp-border-prominent);
+  }
+
+  /* Safe Area - Never overlap menubar or dock */
+  .vp-safe-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    max-height: 100%;
+    padding: var(--vp-space-lg) var(--vp-space-xl);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .vp-window {
+      width: 90%;
+      height: 80vh;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .vp-header {
+      padding: 0 16px;
+    }
+
+    .vp-content {
+      padding: var(--vp-space-lg);
+    }
+
+    .vp-path {
+      font-size: 12px;
+    }
+    
+    .vp-window {
+      width: 95% !important;
+      height: auto !important;
+      min-height: 500px !important;
+      max-height: 85vh;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .vp-window {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 600px !important;
+      border-radius: var(--vp-radius-lg);
+    }
+
+    .vp-content {
+      padding: var(--vp-space-md);
+    }
+    
+    .vp-safe-area {
+      padding: var(--vp-space-sm);
+    }
+  }
+</style>

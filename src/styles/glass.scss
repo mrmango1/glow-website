@@ -1,0 +1,120 @@
+// Enhanced Glass Effect Variables
+:root {
+  --glass-color: rgba(187, 187, 188, 0.12);
+  --glass-light: rgba(255, 255, 255, 0.1);
+  --glass-dark: rgba(0, 0, 0, 0.1);
+  --glass-reflex-light: 1;
+  --glass-reflex-dark: 1;
+  --glass-saturation: 150%;
+  --glass-blur: 12px;
+  --glass-border-light: rgba(255, 255, 255, 0.4);
+  --glass-border-dark: rgba(255, 255, 255, 0.2);
+}
+
+:root.dark {
+  --glass-reflex-light: 0.3;
+  --glass-reflex-dark: 2;
+  --glass-saturation: 120%;
+  --glass-border-light: rgba(255, 255, 255, 0.2);
+  --glass-border-dark: rgba(0, 0, 0, 0.3);
+}
+
+// Enhanced Glass Effect with Advanced Shadows
+.glass {
+  position: relative;
+  background: color-mix(in srgb, var(--glass-color) 12%, transparent);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  @apply rounded-3xl;
+
+  // Multiple inset shadows for depth and realism
+  box-shadow:
+    // Light reflexes
+    inset 0 0 0 1px color-mix(in srgb, var(--glass-light) calc(var(--glass-reflex-light) * 10%), transparent),
+    inset 1.8px 3px 0px -2px color-mix(in srgb, var(--glass-light) calc(var(--glass-reflex-light) * 90%), transparent),
+    inset -2px -2px 0px -2px color-mix(in srgb, var(--glass-light) calc(var(--glass-reflex-light) * 80%), transparent),
+
+    // Dark shadows for depth
+    inset 0 -1px 0 0 color-mix(in srgb, var(--glass-dark) calc(var(--glass-reflex-dark) * 4%), transparent),
+    inset 0 1px 1px 0 color-mix(in srgb, var(--glass-dark) calc(var(--glass-reflex-dark) * 2%), transparent),
+
+    // External shadows
+    0 2px 8px -2px rgba(0, 0, 0, 0.15),
+    0 4px 16px -4px rgba(0, 0, 0, 0.1),
+    0 12px 32px -8px rgba(0, 0, 0, 0.05);
+
+  // Subtle border like Ghostty app - very thin and elegant
+  border: 0.5px solid;
+  border-color: rgba(255, 255, 255, 0.18);
+
+  // Add subtle outline for additional depth
+  outline: 1px solid rgba(0, 0, 0, 0.08);
+  outline-offset: -0.5px;
+
+  // Smooth transitions (hover effect removed)
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Dark mode specific adjustments for glass
+:root.dark .glass,
+.dark .glass {
+  border-color: rgba(255, 255, 255, 0.12);
+  outline: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.glass-borderless {
+  position: relative;
+  background: color-mix(in srgb, var(--glass-color) 8%, transparent);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  box-shadow:
+    inset 0 0 0 0.5px color-mix(in srgb, var(--glass-light) calc(var(--glass-reflex-light) * 5%), transparent),
+    inset 0 1px 0 0 color-mix(in srgb, var(--glass-light) calc(var(--glass-reflex-light) * 30%), transparent),
+    0 2px 8px -2px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-t {
+  @apply bg-bg-t dark:bg-darkmode-bg-t;
+  @apply bg-opacity-20 dark:bg-opacity-20;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  @apply bg-clip-padding;
+  border: 1px solid;
+  border-color: color-mix(in srgb, rgba(255, 255, 255, 0.6) 70%, rgba(255, 255, 255, 0.15) 30%);
+
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.05),
+    2px 2px 8px rgba(0, 0, 0, 0.25);
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.dark {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.glass-t-borderless {
+  @apply bg-bg-t dark:bg-darkmode-bg-t;
+  @apply bg-opacity-20 dark:bg-opacity-20;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  @apply bg-clip-padding;
+
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+    0 1px 4px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Gradient
+.gradient {
+  @apply from-transparent via-transparent to-transparent;
+  // @apply from-txt-s via-transparent to-transparent;
+  // @apply dark:from-darkmode-txt-s dark:via-transparent dark:to-transparent;
+}

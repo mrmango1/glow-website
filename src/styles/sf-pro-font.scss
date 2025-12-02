@@ -1,0 +1,104 @@
+// SF Pro Font - Apple's System Font
+// This provides the native macOS look for the GlassBar
+
+// SF Pro Font Stack - Uses system fonts for optimal performance and native feel
+@mixin sf-pro-font {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "SF Pro Icons",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  // Font smoothing for crisp text like macOS
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // Text rendering optimization
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+}
+
+// SF Pro Text - For body text (14px and smaller)
+@mixin sf-pro-text {
+  @include sf-pro-font;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+}
+
+// SF Pro Display - For larger text (20px and larger)
+@mixin sf-pro-display {
+  @include sf-pro-font;
+  font-weight: 500;
+  letter-spacing: -0.024em;
+}
+
+// Font weight variables matching SF Pro
+$sf-ultralight: 100;
+$sf-thin: 200;
+$sf-light: 300;
+$sf-regular: 400;
+$sf-medium: 500;
+$sf-semibold: 600;
+$sf-bold: 700;
+$sf-heavy: 800;
+$sf-black: 900;
+
+// Apply SF Pro to GlassBar specifically
+.glass-bar-font {
+  @include sf-pro-text;
+  font-size: 13px; // Standard macOS menu bar font size
+  line-height: 1.2;
+
+  // Menu items
+  .menu-item {
+    font-weight: $sf-regular;
+
+    &.menu-title {
+      font-weight: $sf-semibold; // Slightly bolder for app name
+    }
+
+    &:hover {
+      font-weight: $sf-medium;
+    }
+  }
+
+  // Time display
+  .time-display {
+    font-weight: $sf-regular;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+  }
+}
+
+// Global override for Header component
+.glass-liquid {
+  @include sf-pro-text;
+
+  // All text within the glass bar
+  * {
+    font-family: inherit;
+  }
+
+  // Bold items (like GlassBar title)
+  .font-bold {
+    font-weight: $sf-semibold !important;
+  }
+
+  // Regular menu items
+  .font-500 {
+    font-weight: $sf-regular !important;
+  }
+
+  // Time and status text
+  .font-mono {
+    @include sf-pro-text;
+    font-weight: $sf-regular;
+    font-size: 13px;
+  }
+}

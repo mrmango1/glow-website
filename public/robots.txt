@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/*
+
+# TODO: Update with your actual sitemap URL
+Sitemap: https://glow-website.github.io/sitemap-index.xml
