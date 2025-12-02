@@ -116,10 +116,10 @@ const GlassFiltersSVG: React.FC = () => {
           >
             <feDistantLight azimuth="45" elevation="60" />
           </feDiffuseLighting>
-          <feComposite
+          <feBlend
             in="diffLight"
             in2="SourceGraphic"
-            operator="multiply"
+            mode="multiply"
           />
         </filter>
       </defs>

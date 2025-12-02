@@ -194,7 +194,7 @@ const FeaturesShowcase: React.FC = () => {
               <video
                 key={activeFeature.id}
                 className="feature-video"
-                src={`${import.meta.env.BASE_URL}${activeFeature.video}`}
+                src={activeFeature.video}
                 autoPlay
                 loop
                 muted

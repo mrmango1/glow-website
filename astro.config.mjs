@@ -11,9 +11,7 @@ import remarkMath from "remark-math";
 
 // https://astro.build/config
 export default defineConfig({
-  // TODO: Update with your GitHub username
-  site: "https://mrmango1.github.io",
-  base: "/glow-website",
+  site: "https://www.glow-website.com",
   trailingSlash: "ignore",
   prefetch: {
     prefetchAll: true
