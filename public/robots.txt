@@ -4,4 +4,4 @@ Allow: /
 Disallow: /api/*
 
 # TODO: Update with your actual sitemap URL
-Sitemap: https://glow-website.github.io/sitemap-index.xml
+Sitemap: https://mrmango1.github.io/glow-website/sitemap-index.xml
