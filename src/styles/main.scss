@@ -15,6 +15,9 @@
   @include meta.load-css("glass-liquid-border");
   @include meta.load-css("sf-pro-font");
   @include meta.load-css("vision-pro");
+  @include meta.load-css("components/features-showcase");
+  @include meta.load-css("components/changelog-timeline");
+  @include meta.load-css("components/faq-showcase");
 }
 
 @layer utilities {
