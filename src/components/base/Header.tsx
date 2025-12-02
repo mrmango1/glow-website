@@ -5,9 +5,10 @@ import GlassFiltersSVG from "./GlassFiltersSVG";
 
 interface Props {
   pathname: string;
+  base?: string;
 }
 
-const Header: React.FC<Props> = ({ pathname }) => {
+const Header: React.FC<Props> = ({ pathname, base = "" }) => {
   const [currentStyle, setCurrentStyle] = useState<"no-shape" | "full" | "split">("split");
   const [currentTime, setCurrentTime] = useState<string>("");
   const [iconsVisible, setIconsVisible] = useState<boolean>(true);
@@ -17,19 +18,19 @@ const Header: React.FC<Props> = ({ pathname }) => {
   const menu = [
     {
       name: "Glow",
-      url: "/",
+      url: `${base}/`,
     },
     {
       name: "Features",
-      url: "/features",
+      url: `${base}/features`,
     },
     {
       name: "FAQ",
-      url: "/faq",
+      url: `${base}/faq`,
     },
     {
       name: "Changelog",
-      url: "/changelog",
+      url: `${base}/changelog`,
     },
   ];
 
