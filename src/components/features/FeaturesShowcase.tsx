@@ -19,6 +19,7 @@ interface Feature {
   details: string[];
   badge: string;
   badgeType: "core" | "flexible" | "exclusive" | "beta" | "smart" | "design" | "pro" | "power";
+  video?: string;
 }
 
 const features: Feature[] = [
@@ -36,6 +37,7 @@ const features: Feature[] = [
     ],
     badge: "Core",
     badgeType: "core",
+    video: "/features/core.mp4",
   },
   {
     id: "reveal",
@@ -186,15 +188,27 @@ const FeaturesShowcase: React.FC = () => {
       <div className="preview-area">
         <div className="preview-glow" data-badge-type={activeFeature.badgeType} />
         <div className={`preview-content ${isTransitioning ? "transitioning" : ""}`}>
-          {/* Placeholder for image/video */}
+          {/* Video or Placeholder */}
           <div className="preview-media">
-            <div className="media-placeholder">
-              <div className="placeholder-icon-wrapper">
-                <span className="placeholder-icon">{activeFeature.icon}</span>
-                <div className="icon-ring" />
-                <div className="icon-pulse" />
+            {activeFeature.video ? (
+              <video
+                key={activeFeature.id}
+                className="feature-video"
+                src={`${import.meta.env.BASE_URL}${activeFeature.video}`}
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <div className="media-placeholder">
+                <div className="placeholder-icon-wrapper">
+                  <span className="placeholder-icon">{activeFeature.icon}</span>
+                  <div className="icon-ring" />
+                  <div className="icon-pulse" />
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Feature Info */}
@@ -363,6 +377,15 @@ const FeaturesShowcase: React.FC = () => {
             rgba(255, 255, 255, 0.03) 0%,
             transparent 50%
           );
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .feature-video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
         }
 
         .media-placeholder {
