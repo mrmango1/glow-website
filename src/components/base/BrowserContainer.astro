@@ -12,7 +12,8 @@ export interface Props {
   height?: string;
 }
 const { class: extraClass = "", showHeader = true, width = "1000px", height = "600px" } = Astro.props as Props;
-const currentPath = Astro.url.pathname;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentPath = Astro.url.pathname.replace(base, '') || '/';
 
 ---
 
