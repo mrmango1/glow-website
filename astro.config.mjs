@@ -11,7 +11,7 @@ import remarkMath from "remark-math";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.glow-website.com",
+  site: "https://macglow.app",
   trailingSlash: "ignore",
   prefetch: {
     prefetchAll: true
