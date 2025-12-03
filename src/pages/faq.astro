@@ -22,7 +22,7 @@ const description = "Frequently asked questions about Glow, the menu bar manager
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 2rem 0;
+    padding: var(--vp-space-sm) 0;
   }
 
   .container {
@@ -36,10 +36,6 @@ const description = "Frequently asked questions about Glow, the menu bar manager
   }
 
   @media (max-width: 768px) {
-    .faq-page {
-      padding: 1rem 0;
-    }
-
     .container {
       padding: 0 1.25rem;
     }

@@ -167,40 +167,35 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
     color: var(--vp-text-primary);
   }
 
-  /* Content Area - Scrollable */
+  /* Content Area - Scrollable when needed, max-height controls window size */
   .vp-content {
-    flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: var(--vp-space-sm);
+    padding-bottom: var(--vp-space-sm);
     position: relative;
-    min-height: 0; /* Important for flexbox scroll */
+    max-height: min(652px, calc(100vh - 140px)); /* 700 - header(48) = 652 */
   }
 
-  /* Ensure vp-window is using flexbox properly */
+  /* Window sizes to content naturally */
   .vp-window {
     display: flex;
     flex-direction: column;
     width: var(--window-width, 1000px);
-    height: var(--window-height, 600px);
     max-width: 100%;
-    max-height: calc(100vh - 140px); /* Reserve space for menubar (~40px) and dock (~100px) */
     box-shadow: 
       0 20px 60px rgba(0, 0, 0, 0.3),
       0 40px 120px rgba(0, 0, 0, 0.2);
   }
 
-  /* Low resolution screens - allow more vertical space */
+  /* Low resolution screens - allow more vertical space for content */
   @media (max-height: 800px) {
-    .vp-window {
-      height: auto;
-      min-height: var(--window-height, 600px);
+    .vp-content {
       max-height: calc(100vh - 100px);
     }
   }
 
   @media (max-height: 700px) {
-    .vp-window {
+    .vp-content {
       max-height: calc(100vh - 80px);
     }
   }
@@ -228,9 +223,9 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 0;
-    max-height: 100%;
     padding: 0px;
+    height: fit-content;
+    margin: auto 0;
   }
 
   /* Responsive */
