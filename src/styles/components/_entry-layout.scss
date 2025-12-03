@@ -5,7 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--vp-space-md) var(--vp-space-xl);
+  padding: var(--vp-space-sm) var(--vp-space-lg);
+  overflow: visible;
 }
 
 .vp-product-container {
@@ -13,9 +14,10 @@
   max-width: 100%;
   display: grid;
   grid-template-columns: 1fr 1.4fr;
-  gap: var(--vp-space-xl);
+  gap: var(--vp-space-lg);
   align-items: center;
   padding-top: 0;
+  overflow: visible;
 }
 
 /* Premium Animations */
@@ -112,9 +114,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-right: var(--vp-space-lg);
+  padding-right: var(--vp-space-md);
   border-right: 1px solid var(--vp-border-subtle);
   animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  overflow: visible;
 }
 
 /* Typewriter Title - Premium Elegant Style */
@@ -145,13 +148,13 @@
   align-items: center;
   justify-content: center;
   font-family: 'Great Vibes', cursive;
-  font-size: 6rem;
+  font-size: 5rem;
   font-weight: 400;
   color: var(--vp-text-primary);
   letter-spacing: 0.02em;
-  line-height: 1.6;
-  min-height: 9rem;
-  padding: 3rem 0.5rem 0 0.5rem;
+  line-height: 1.2;
+  min-height: 6rem;
+  padding: 0.5rem 0.5rem 0 0.5rem;
   margin-bottom: 0;
   overflow: visible;
 }
@@ -188,7 +191,7 @@
 .vp-typewriter-cursor {
   display: inline-block;
   width: 3px;
-  height: 5rem;
+  height: 4rem;
   background: linear-gradient(
     180deg,
     rgba(124, 179, 66, 0.9) 0%,
@@ -203,20 +206,22 @@
 /* Cursive Version & Tagline */
 .vp-cursive-version {
   font-family: 'Great Vibes', cursive;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--vp-text-secondary);
   opacity: 0.8;
   text-align: center;
+  margin-top: -0.25rem;
 }
 
 .vp-cursive-tagline {
   font-family: 'Great Vibes', cursive;
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   color: var(--vp-text-tertiary);
   text-align: center;
   max-width: 90%;
-  line-height: 1.3;
+  line-height: 1.25;
   opacity: 0.7;
+  margin-top: -0.25rem;
 }
 
 .vp-right-column {
@@ -282,11 +287,15 @@
 
 /* Vision Pro Icon Container */
 .vp-icon-container {
-  margin-bottom: 0;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  width: 10rem;
+  height: 10rem;
+  overflow: visible;
 }
 
 /* Pulse ring effect behind icon - multiple colored rings */
@@ -298,6 +307,7 @@
   border: 2px solid;
   opacity: 0;
   animation: pulseRingColored 4s ease-out infinite;
+  pointer-events: none;
 }
 
 .vp-pulse-ring--green {
@@ -328,10 +338,10 @@
 @keyframes pulseRingColored {
   0% {
     transform: scale(1);
-    opacity: 0.8;
+    opacity: 0.7;
   }
   100% {
-    transform: scale(1.8);
+    transform: scale(1.5);
     opacity: 0;
   }
 }
@@ -355,8 +365,8 @@
 }
 
 .vp-icon {
-  width: 11rem;
-  height: 11rem;
+  width: 10rem;
+  height: 10rem;
   opacity: 1;
   border-radius: 22%;
 }
