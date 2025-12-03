@@ -136,7 +136,7 @@ const isHome = Astro.url.pathname === '/';
   <body>
     <Background />
     <Header client:load pathname={Astro.url.pathname} base={import.meta.env.BASE_URL.replace(/\/$/, '')} />
-    <main id="main-content" class="flex-1">
+    <main id="main-content" class="flex-1" style="display: flex;">
       <BrowserContainer showHeader={true} width="1100px" height="700px">
         <slot/>
       </BrowserContainer>

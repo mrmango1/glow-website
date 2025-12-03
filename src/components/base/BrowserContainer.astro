@@ -120,14 +120,6 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
     opacity: 0.8;
   }
 
-  .vp-controls:hover .vp-control .control-dot {
-    opacity: 1;
-  }
-
-  .vp-controls:not(:hover) .vp-control .control-dot {
-    opacity: 0.6;
-  }
-
   .vp-control:hover .control-dot {
     opacity: 1 !important;
     transform: scale(1.1);
@@ -198,6 +190,21 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
       0 40px 120px rgba(0, 0, 0, 0.2);
   }
 
+  /* Low resolution screens - allow more vertical space */
+  @media (max-height: 800px) {
+    .vp-window {
+      height: auto;
+      min-height: var(--window-height, 600px);
+      max-height: calc(100vh - 100px);
+    }
+  }
+
+  @media (max-height: 700px) {
+    .vp-window {
+      max-height: calc(100vh - 80px);
+    }
+  }
+
   /* Scrollbar Styling */
   .vp-content::-webkit-scrollbar {
     width: 8px;
@@ -223,7 +230,7 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
     justify-content: center;
     min-height: 0;
     max-height: 100%;
-    padding: var(--vp-space-lg) var(--vp-space-xl);
+    padding: 0px;
   }
 
   /* Responsive */
@@ -265,10 +272,6 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
 
     .vp-content {
       padding: var(--vp-space-md);
-    }
-    
-    .vp-safe-area {
-      padding: var(--vp-space-sm);
     }
   }
 </style>
