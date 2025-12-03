@@ -180,8 +180,9 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
   .vp-window {
     display: flex;
     flex-direction: column;
-    width: var(--window-width, 1000px);
-    max-width: 100%;
+    width: fit-content; /* Adapt to content width */
+    min-width: 400px; /* Minimum reasonable width */
+    max-width: min(1100px, calc(100vw - 120px)); /* Max 1100px or viewport minus dock/padding */
     box-shadow: 
       0 20px 60px rgba(0, 0, 0, 0.3),
       0 40px 120px rgba(0, 0, 0, 0.2);
@@ -228,11 +229,12 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
     margin: auto 0;
   }
 
-  /* Responsive */
+  /* Responsive - smaller screens need percentage-based widths */
   @media (max-width: 1024px) {
     .vp-window {
-      width: 90%;
-      height: 80vh;
+      width: fit-content;
+      min-width: 90%;
+      max-width: 95%;
     }
   }
 
@@ -250,18 +252,15 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
     }
     
     .vp-window {
-      width: 95% !important;
-      height: auto !important;
-      min-height: 500px !important;
-      max-height: 85vh;
+      width: 95%;
+      min-width: 95%;
     }
   }
 
   @media (max-width: 640px) {
     .vp-window {
-      width: 100% !important;
-      height: auto !important;
-      min-height: 600px !important;
+      width: 100%;
+      min-width: 100%;
       border-radius: var(--vp-radius-lg);
     }
 
